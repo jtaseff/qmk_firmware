@@ -6,6 +6,7 @@
 #define _QWERTY 0
 #define _LOWER 1
 #define _RAISE 2
+#define _RGBTEST 3
 
 #define RAISE MO(_RAISE)
 #define LOWER MO(_LOWER)
@@ -17,7 +18,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB , KC_Q  , KC_W  ,  KC_E  ,  KC_R  , KC_T  ,                         KC_Y  , KC_U  , KC_I  , KC_O  , KC_P  ,KC_MINS,
      KC_LSFT, KC_A  , KC_S  ,  KC_D  ,  KC_F  , KC_G  ,                         KC_H  , KC_J  , KC_K  , KC_L  ,KC_SCLN,KC_QUOT,
      KC_LCTL, KC_Z  , KC_X  ,  KC_C  ,  KC_V  , KC_B  ,                         KC_N  , KC_M  ,KC_COMM,KC_DOT ,KC_SLSH,KC_BSLASH,
-                      KC_LBRC, KC_RBRC,                                                        KC_PLUS, KC_EQL,
+                      MO(_RGBTEST), KC_RBRC,                                                        KC_PLUS, KC_EQL,
                                         KC_BSPC, RAISE , KC_LALT,      KC_ENT , LOWER , KC_SPC
   ),
 
@@ -34,10 +35,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT_5x6_JT(
        KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                        KC_F6  , KC_F7 , KC_F8 , KC_F9 ,KC_F10 ,KC_F11 ,
-       _______,RGB_MODE_FORWARD,_______,_______,_______,KC_LBRC,                        KC_RBRC,_______,KC_NLCK,KC_INS ,KC_SLCK,KC_MUTE,
+       _______,RGB_MODE_FORWARD,RGB_TOG,_______,_______,KC_LBRC,                        KC_RBRC,_______,KC_NLCK,KC_INS ,KC_SLCK,KC_MUTE,
        _______,KC_LEFT,KC_UP  ,KC_DOWN,KC_RGHT,KC_LPRN,                        KC_RPRN,KC_MPRV,KC_MPLY,KC_MNXT,_______,KC_VOLU,
        _______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,KC_VOLD,
 	                   _______,_______,                                                        KC_P0 , _______,
                                        _______,_______,_______,        _______,_______,_______
   ),
+  
+  [_RGBTEST] = LAYOUT_5x6_JT(
+       _______,_______ , _______ , _______ , _______ , _______ ,                _______  , _______ , _______ , _______ ,_______ ,_______ ,
+       _______,RGB_MODE_FORWARD,RGB_TOG,_______,_______,_______,                RGB_HUI,RGB_SAI,RGB_VAI,_______ ,_______,_______,
+       _______,RGB_MODE_REVERSE,_______  ,_______,_______,_______,              RGB_HUD,RGB_SAD,RGB_VAD,_______,_______,_______,
+       _______,_______,_______,_______,_______,_______,                        KC_7,_______,_______,_______,_______,_______,
+	                   _______,_______,                                                        _______ , _______,
+                                       _______,_______,_______,        _______,_______,_______
+  )
 };

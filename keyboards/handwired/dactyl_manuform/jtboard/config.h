@@ -50,12 +50,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // Lighting: WS2812 RGB LED strip input and number of LEDs
+#undef RGB_DI_PIN
+#undef RGBLED_NUM
 #define RGB_DI_PIN D4
-#define RGBLED_NUM 12
-#define RGBLIGHT_SPLIT
-#define RGBLED_SPLIT { 6, 6 }
+#define RGBLED_NUM 6
+// #define RGBLIGHT_SPLIT
+// #define RGBLED_SPLIT { 6, 6 }
 
 #define RGBLIGHT_ANIMATIONS
+#define RGBLIGHT_HUE_STEP 12
+#define RGBLIGHT_SAT_STEP 12
+#define RGBLIGHT_VAL_STEP 12
 
 /* define if matrix has ghost */
 //#define MATRIX_HAS_GHOST
