@@ -4,9 +4,12 @@
 #include "jtboard.h"
 
 #define _QWERTY 0
-#define _LOWER 1
-#define _RAISE 2
-#define _RGBTEST 3
+#define _DVORAK 1
+#define _DVERTY 2
+#define _LOWER 3
+#define _RAISE 4
+#define _RGBTEST 5
+#define _MEDIA 6
 
 #define RAISE MO(_RAISE)
 #define LOWER MO(_LOWER)
@@ -21,6 +24,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                       MO(_RGBTEST), KC_RBRC,                                                        KC_PLUS, KC_EQL,
                                         KC_BSPC, RAISE , KC_LALT,      KC_ENT , LOWER , KC_SPC
   ),
+
+
+
+
+
+
+
+
 
   [_LOWER] = LAYOUT_5x6_JT(
 
