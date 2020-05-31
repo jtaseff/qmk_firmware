@@ -19,6 +19,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #pragma once
 
 
+// some setup for tap dancing
+#define TAPPING_TERM 200
+
+#define DO_TAP(keycode) \
+register_code16(keycode); \
+unregister_code16(keycode)
+
+#define DO_TAP_WITH_MOD(mod, key) \
+register_code(mod); \
+register_code(key); \
+unregister_code(key); \
+unregister_code(mod)
+
 // #define USE_SERIAL
 
 // #define MASTER_LEFT
