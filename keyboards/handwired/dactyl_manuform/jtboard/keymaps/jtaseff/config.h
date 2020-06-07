@@ -20,7 +20,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 // some setup for tap dancing
+#define PERMISSIVE_HOLD
+#undef IGNORE_MOD_TAP_INTERRUPT	// defining this has fixed the rollover issue with shift+space on one key where rolling keys would send shift.
 #define TAPPING_TERM 200
+
 
 #define DO_TAP(keycode) \
 register_code16(keycode); \

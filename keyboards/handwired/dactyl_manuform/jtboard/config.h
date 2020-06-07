@@ -62,6 +62,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define RGBLIGHT_SAT_STEP 12
 #define RGBLIGHT_VAL_STEP 12
 
+
+
 /* define if matrix has ghost */
 //#define MATRIX_HAS_GHOST
 
