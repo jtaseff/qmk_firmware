@@ -2,14 +2,14 @@
 
 #include QMK_KEYBOARD_H
 #include "jtboard.h"
+#include "string.h"
 
 #define _QWERTY		0
 #define _DVORAK 	1
 #define _DVERTY 	2
-#define _LOWER		3
-#define _NAV		4
-#define _RGBTEST	5
-#define _MEDIA		6
+#define _NAV		3
+#define _RGBTEST	4
+#define _MEDIA		5
 
 
 #define DVERTYCTL LM(_DVERTY,MOD_LCTL)
@@ -70,7 +70,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 	[_DVERTY] = LAYOUT_5x6_JT(
-  // CTRL-layout for dvorak to remap to qwerty
+  // CTRL-layout for dvorak to remap shortcuts to qwerty
   //--------|---------+---------+---------+---------+---------+-------------|------------+-----------+---------+---------+---------+---------+-------------------------//
 	_______ , _______ , _______ , _______ , _______ , _______ ,                              _______ , _______ , _______ , _______ , _______ , _______ ,
   //--------|---------|---------|---------|---------|---------|-------------|------------|-----------|---------|---------|---------|---------|-------------------------//
@@ -111,30 +111,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 
 
-
-/*
-	[_NAV] = LAYOUT_5x6_JT(
-		KC_F12 , KC_F1 , KC_F2 , KC_F3 , KC_F4 , KC_F5 ,                        KC_F6  , KC_F7 , KC_F8 , KC_F9 ,KC_F10 ,KC_F11 ,
-		_______,RGB_MODE_FORWARD,RGB_TOG,_______,_______,KC_LBRC,                        KC_RBRC,_______,KC_NLCK,KC_INS ,KC_SLCK,KC_MUTE,
-		_______,KC_LEFT,KC_UP  ,KC_DOWN,KC_RGHT,KC_LPRN,                        KC_RPRN,KC_MPRV,KC_MPLY,KC_MNXT,_______,KC_VOLU,
-		_______,_______,_______,_______,_______,_______,                        _______,_______,_______,_______,_______,KC_VOLD,
-					_______,_______,                                                        KC_P0 , _______,
-										_______,_______,_______,        _______,_______,_______
-	),
-
-*/
-
-
-  [_LOWER] = LAYOUT_5x6_JT(
-
-     KC_TILD,KC_EXLM, KC_AT ,KC_HASH,KC_DLR ,KC_PERC,                        KC_CIRC,KC_AMPR,KC_ASTR,KC_LPRN,KC_RPRN,KC_DEL,
-     _______,_______,_______,_______,_______,KC_LBRC,                        KC_RBRC, KC_P7 , KC_P8 , KC_P9 ,_______,KC_PLUS,
-     _______,KC_HOME,KC_PGUP,KC_PGDN,KC_END ,KC_LPRN,                        KC_RPRN, KC_P4 , KC_P5 , KC_P6 ,KC_MINS,KC_PIPE,
-     _______,_______,_______,_______,_______,_______,                        _______, KC_P1 , KC_P2 , KC_P3 ,KC_EQL ,KC_UNDS,
-	                 _______,_______,                                                         KC_P0 , _______,
-                                       _______,_______,_______,      _______,_______,_______
-
-  ),
 
 
   
@@ -190,12 +166,6 @@ BLANK LAYOUT
 
 
 
-
-// thumb shift, not working well because I roll space+letter on right thumb too much and it keeps mixing up spaces and shifts. Will try left thumb only.
-
-	                        LSFT_T(KC_BSPC) , LT(_NAV, KC_ENT)  , KC_SPC,          KC_BSPC , LT(_NAV, KC_ENT)    , LSFT_T(KC_SPC)
-							
-							
 */
 
 
@@ -356,3 +326,74 @@ void ctrltap_reset(qk_tap_dance_state_t *state, void *user_data) {
 }
 */
 
+
+
+#ifdef OLED_DRIVER_ENABLE
+
+void oled_task_user(void) {
+	// // Host Keyboard Layer Status
+    // oled_write_P(PSTR("Layer: "), false);
+
+    // switch (get_highest_layer(layer_state)) {
+        // case _QWERTY:
+            // oled_write_P(PSTR("QWERTY\n"), false);
+            // break;
+        // case _DVERTY:
+            // oled_write_P(PSTR("DVERTY\n"), false);
+            // break;
+        // case _MEDIA:
+            // oled_write_P(PSTR("MEDIA\n"), false);
+            // break;
+        // case _NAV:
+            // oled_write_P(PSTR("NAV\n"), false);
+            // break;
+        // case _DVORAK:
+            // oled_write_P(PSTR("DVORAK\n"), false);
+            // break;
+        // default:
+            // // Or use the write_ln shortcut over adding '\n' to the end of your string
+            // oled_write_ln_P(PSTR("Other"), false);
+    // }
+
+    // // Host Keyboard LED Status
+    // led_t led_state = host_keyboard_led_state();
+    // oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
+    // oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
+    // oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+}
+
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+	oled_write_P(PSTR("Now on : "), false);
+
+    switch (get_highest_layer(state)) {
+        case _QWERTY:
+            
+			if(is_layer_on(_DVORAK)) 
+				oled_write_P(PSTR("cDVORAK\n"), false);
+			else
+				oled_write_P(PSTR("cQWERTY\n"), false);
+            break;
+        case _DVERTY:
+            oled_write_P(PSTR("DVERTY\n"), false);
+            break;
+        case _MEDIA:
+            oled_write_P(PSTR("MEDIA\n"), false);
+            break;
+        case _NAV:
+            oled_write_P(PSTR("NAV\n"), false);
+            break;
+        case _DVORAK:
+            oled_write_P(PSTR("DVORAK\n"), false);
+            break;
+        default:
+            // Or use the write_ln shortcut over adding '\n' to the end of your string
+            oled_write_ln_P(PSTR("Other"), false);
+    }
+	
+	// oled_write_P(sprintf("State: %d", state), false);
+	
+	return state;
+}
+
+#endif

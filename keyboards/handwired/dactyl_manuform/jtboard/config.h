@@ -1,20 +1,5 @@
-/*
-Copyright 2012 Jun Wako <wakojun@gmail.com>
-Copyright 2015 Jack Humbert
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 2 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
+// JT's keyboard config
 
 #pragma once
 
@@ -45,23 +30,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define MASTER_LEFT
 #define EE_HANDS
 #define USE_I2C
-#define SPLIT_USB_DETECT
-#define SPLIT_USB_TIMEOUT 2000
+// #define SPLIT_USB_DETECT
+// #define SPLIT_USB_TIMEOUT 2000
 
 
 // Lighting: WS2812 RGB LED strip input and number of LEDs
 #undef RGB_DI_PIN
 #undef RGBLED_NUM
 #define RGB_DI_PIN D4
-#define RGBLED_NUM 6
-// #define RGBLIGHT_SPLIT
-// #define RGBLED_SPLIT { 6, 6 }
+#define RGBLED_NUM 12
+#define RGBLIGHT_SPLIT
+#define RGBLED_SPLIT { 6, 6 }
 
 #define RGBLIGHT_ANIMATIONS
 #define RGBLIGHT_HUE_STEP 12
 #define RGBLIGHT_SAT_STEP 12
 #define RGBLIGHT_VAL_STEP 12
 
+
+// OLED screen
+#define SSD1306OLED
+#define OLED_DISPLAY_ADDRESS 0x3C
 
 
 /* define if matrix has ghost */

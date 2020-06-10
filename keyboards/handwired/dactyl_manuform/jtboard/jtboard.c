@@ -6,6 +6,9 @@ void led_set_kb(uint8_t usb_led) {
     // put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
     led_set_user(usb_led);
 }
+void matrix_master_OLED_init(void) {
+	
+}
 #endif
 
 void matrix_init_kb(void) {
@@ -17,6 +20,8 @@ void matrix_init_kb(void) {
     // // orange led on
     // DDRB |= (1<<0);
     // PORTB &= ~(1<<0);
+	
+	// iota_gfx_init(!has_usb());
 
 	matrix_init_user();
 };
