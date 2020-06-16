@@ -2,21 +2,25 @@
 
 #include QMK_KEYBOARD_H
 #include "jtboard.h"
-#include "string.h"
-
-#define _QWERTY		0
-#define _DVORAK 	1
-#define _DVERTY 	2
-#define _NAV		3
-#define _RGBTEST	4
-#define _MEDIA		5
+#include "print.h"
 
 
+enum layer_names {
+	_QWERTY,
+	_DVORAK,
+	_DVERTY,
+	_NAV,
+	_RGBTEST,
+	_MEDIA
+};
+
+
+// custom key codes
 #define DVERTYCTL LM(_DVERTY,MOD_LCTL)
 
 
-// TAP DANCE SECTION
 
+// tap dance codes
 enum {
 	TD_LBRC = 0,
 	TD_RBRC
@@ -367,13 +371,16 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 	oled_write_P(PSTR("Now on : "), false);
 
     switch (get_highest_layer(state)) {
-        case _QWERTY:
-            
-			if(is_layer_on(_DVORAK)) 
-				oled_write_P(PSTR("cDVORAK\n"), false);
-			else
-				oled_write_P(PSTR("cQWERTY\n"), false);
-            break;
+        case 0:
+			switch (get_highest_layer(default_layer_state)) {
+				case _QWERTY:
+					oled_write_P(PSTR("QWERTY\n"), false);
+					break;
+				case _DVORAK:
+				case _DVERTY:
+					oled_write_P(PSTR("DVORAK\n"), false);
+					break;
+			}
         case _DVERTY:
             oled_write_P(PSTR("DVERTY\n"), false);
             break;
@@ -383,15 +390,13 @@ layer_state_t layer_state_set_user(layer_state_t state) {
         case _NAV:
             oled_write_P(PSTR("NAV\n"), false);
             break;
-        case _DVORAK:
-            oled_write_P(PSTR("DVORAK\n"), false);
-            break;
         default:
             // Or use the write_ln shortcut over adding '\n' to the end of your string
             oled_write_ln_P(PSTR("Other"), false);
     }
 	
 	// oled_write_P(sprintf("State: %d", state), false);
+	uprintf("state %u, highest %u, default %u, def high %u\n", state, get_highest_layer(state), default_layer_state, get_highest_layer(default_layer_state));
 	
 	return state;
 }
