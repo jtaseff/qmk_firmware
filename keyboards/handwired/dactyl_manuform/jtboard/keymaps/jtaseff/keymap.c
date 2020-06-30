@@ -334,71 +334,106 @@ void ctrltap_reset(qk_tap_dance_state_t *state, void *user_data) {
 
 #ifdef OLED_DRIVER_ENABLE
 
-void oled_task_user(void) {
-	// // Host Keyboard Layer Status
-    // oled_write_P(PSTR("Layer: "), false);
+	void oled_task_user(void) {
+		// // Host Keyboard Layer Status
+		// oled_write_P(PSTR("Layer: "), false);
 
-    // switch (get_highest_layer(layer_state)) {
-        // case _QWERTY:
-            // oled_write_P(PSTR("QWERTY\n"), false);
-            // break;
-        // case _DVERTY:
-            // oled_write_P(PSTR("DVERTY\n"), false);
-            // break;
-        // case _MEDIA:
-            // oled_write_P(PSTR("MEDIA\n"), false);
-            // break;
-        // case _NAV:
-            // oled_write_P(PSTR("NAV\n"), false);
-            // break;
-        // case _DVORAK:
-            // oled_write_P(PSTR("DVORAK\n"), false);
-            // break;
-        // default:
-            // // Or use the write_ln shortcut over adding '\n' to the end of your string
-            // oled_write_ln_P(PSTR("Other"), false);
-    // }
+		// switch (get_highest_layer(layer_state)) {
+			// case _QWERTY:
+				// oled_write_P(PSTR("QWERTY\n"), false);
+				// break;
+			// case _DVERTY:
+				// oled_write_P(PSTR("DVERTY\n"), false);
+				// break;
+			// case _MEDIA:
+				// oled_write_P(PSTR("MEDIA\n"), false);
+				// break;
+			// case _NAV:
+				// oled_write_P(PSTR("NAV\n"), false);
+				// break;
+			// case _DVORAK:
+				// oled_write_P(PSTR("DVORAK\n"), false);
+				// break;
+			// default:
+				// // Or use the write_ln shortcut over adding '\n' to the end of your string
+				// oled_write_ln_P(PSTR("Other"), false);
+		// }
 
-    // // Host Keyboard LED Status
-    // led_t led_state = host_keyboard_led_state();
-    // oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
-    // oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
-    // oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
-}
+		// // Host Keyboard LED Status
+		// led_t led_state = host_keyboard_led_state();
+		// oled_write_P(led_state.num_lock ? PSTR("NUM ") : PSTR("    "), false);
+		// oled_write_P(led_state.caps_lock ? PSTR("CAP ") : PSTR("    "), false);
+		// oled_write_P(led_state.scroll_lock ? PSTR("SCR ") : PSTR("    "), false);
+	}
 
+	layer_state_t layer_state_set_user(layer_state_t state) {
+		oled_write_P(PSTR("Now on : "), false);
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-	oled_write_P(PSTR("Now on : "), false);
-
-    switch (get_highest_layer(state)) {
-        case 0:
-			switch (get_highest_layer(default_layer_state)) {
-				case _QWERTY:
-					oled_write_P(PSTR("QWERTY\n"), false);
-					break;
-				case _DVORAK:
-				case _DVERTY:
-					oled_write_P(PSTR("DVORAK\n"), false);
-					break;
-			}
-        case _DVERTY:
-            oled_write_P(PSTR("DVERTY\n"), false);
-            break;
-        case _MEDIA:
-            oled_write_P(PSTR("MEDIA\n"), false);
-            break;
-        case _NAV:
-            oled_write_P(PSTR("NAV\n"), false);
-            break;
-        default:
-            // Or use the write_ln shortcut over adding '\n' to the end of your string
-            oled_write_ln_P(PSTR("Other"), false);
-    }
+		switch (get_highest_layer(state)) {
+			case 0:
+				switch (get_highest_layer(default_layer_state)) {
+					case _QWERTY:
+						oled_write_P(PSTR("QWERTY\n"), false);
+						break;
+					case _DVORAK:
+					case _DVERTY:
+						oled_write_P(PSTR("DVORAK\n"), false);
+						break;
+				}
+			case _DVERTY:
+				oled_write_P(PSTR("DVERTY\n"), false);
+				break;
+			case _MEDIA:
+				oled_write_P(PSTR("MEDIA\n"), false);
+				break;
+			case _NAV:
+				oled_write_P(PSTR("NAV\n"), false);
+				break;
+			default:
+				// Or use the write_ln shortcut over adding '\n' to the end of your string
+				oled_write_ln_P(PSTR("Other"), false);
+		}
+		
+		// oled_write_P(sprintf("State: %d", state), false);
+		uprintf("state %u, highest %u, default %u, def high %u\n", state, get_highest_layer(state), default_layer_state, get_highest_layer(default_layer_state));
+		
+		return state;
+	}
+#else
 	
-	// oled_write_P(sprintf("State: %d", state), false);
-	uprintf("state %u, highest %u, default %u, def high %u\n", state, get_highest_layer(state), default_layer_state, get_highest_layer(default_layer_state));
+	layer_state_t layer_state_set_user(layer_state_t state) {
+		
+		switch (get_highest_layer(state)) {
+			case 0:
+				rgblight_sethsv(RGB_RED);
+				switch (get_highest_layer(default_layer_state)) {
+					case _QWERTY:
+						rgblight_sethsv(HSV_BLUE);
+						break;
+					case _DVORAK:
+					case _DVERTY:
+						rgblight_sethsv(HSV_GREEN);
+						break;
+				}
+			case _DVERTY:
+				rgblight_sethsv(HSV_ORANGE);
+				break;
+			case _MEDIA:
+				rgblight_sethsv(HSV_PURPLE);
+				break;
+			case _NAV:
+				rgblight_sethsv(HSV_GOLD);
+				break;
+			default:
+				// Or use the write_ln shortcut over adding '\n' to the end of your string
+				rgblight_sethsv(HSV_WHITE);
+		}
+		
+		// oled_write_P(sprintf("State: %d", state), false);
+		uprintf("state %u, highest %u, default %u, def high %u\n", state, get_highest_layer(state), default_layer_state, get_highest_layer(default_layer_state));
+		
+		return state;
+	}
 	
-	return state;
-}
 
 #endif
