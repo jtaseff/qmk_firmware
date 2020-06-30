@@ -32,5 +32,6 @@ void keyboard_post_init_user(void) {
   // debug_matrix=true;
   //debug_keyboard=true;
   //debug_mouse=true;
+  rgblight_sethsv_noeeprom(HSV_WHITE);
 }
 

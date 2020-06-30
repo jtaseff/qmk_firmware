@@ -405,28 +405,32 @@ void ctrltap_reset(qk_tap_dance_state_t *state, void *user_data) {
 		
 		switch (get_highest_layer(state)) {
 			case 0:
-				rgblight_sethsv(RGB_RED);
 				switch (get_highest_layer(default_layer_state)) {
 					case _QWERTY:
-						rgblight_sethsv(HSV_BLUE);
+						uprintf("made case _QWERTY\n");
+						rgblight_sethsv_noeeprom(HSV_BLUE);
 						break;
 					case _DVORAK:
-					case _DVERTY:
-						rgblight_sethsv(HSV_GREEN);
-						break;
+						uprintf("made case _DVORAK\n");
+						rgblight_sethsv_noeeprom(HSV_GREEN);
 				}
+				break;
 			case _DVERTY:
-				rgblight_sethsv(HSV_ORANGE);
+				uprintf("made case _DVERTY\n");
+				rgblight_sethsv_noeeprom(HSV_ORANGE);
 				break;
 			case _MEDIA:
-				rgblight_sethsv(HSV_PURPLE);
+				uprintf("made case _MEDIA\n");
+				rgblight_sethsv_noeeprom(HSV_PURPLE);
 				break;
 			case _NAV:
-				rgblight_sethsv(HSV_GOLD);
+				uprintf("made case _NAV\n");
+				rgblight_sethsv_noeeprom(HSV_GOLD);
 				break;
 			default:
 				// Or use the write_ln shortcut over adding '\n' to the end of your string
-				rgblight_sethsv(HSV_WHITE);
+				uprintf("made case default\n");
+				rgblight_sethsv_noeeprom(HSV_WHITE);
 		}
 		
 		// oled_write_P(sprintf("State: %d", state), false);
