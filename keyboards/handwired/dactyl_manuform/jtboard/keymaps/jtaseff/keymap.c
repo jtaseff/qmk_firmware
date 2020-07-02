@@ -101,9 +101,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //--------|---------|---------|---------|---------|---------|-------------------------------------|---------|---------|---------|---------|-------------------------//
 	_______ ,C(KC_HOME),KC_HOME , KC_UP   , KC_END  , C(KC_END) ,                           KC_PGUP , KC_HOME , KC_UP   , KC_END  , _______ , DF(_QWERTY) ,
   //--------|---------|---------|---------|---------|---------|-------------------------------------|---------|---------|---------|---------|-------------------------//
-	_______,C(KC_LEFT), KC_LEFT , KC_DOWN , KC_RGHT , C(KC_RGHT),                           KC_PGDN , KC_LEFT , KC_DOWN , KC_RGHT , _______ , _______ ,
+	_______,C(KC_LEFT), KC_LEFT , KC_DOWN , KC_RGHT , C(KC_RGHT),                           KC_PGDN , KC_LEFT , KC_DOWN , KC_RGHT , _______ , RGB_TOG     ,
   //--------|---------|---------|---------|---------|---------|-------------------------------------|---------|---------|---------|---------|-------------------------//
-	_______ , _______,_______,C(S(KC_TAB)) , C(KC_TAB), A(KC_TAB),                       _______, C(S(KC_TAB)) , C(KC_TAB),_______,_______ , _______ ,
+	_______ , _______,_______,C(S(KC_TAB)) , C(KC_TAB), A(KC_TAB),                       _______, C(S(KC_TAB)) , C(KC_TAB),_______, _______ , _______     ,
   //------------------------------------------------------------------------------------------------------------------------------------------------------------------//
   //--------|---------|---------|---------|---------|---------|-------------------------------------|---------|---------|---------+---------+-------------------------//
                                   _______ , _______ ,                                                           _______ , _______ ,
@@ -400,7 +400,8 @@ void ctrltap_reset(qk_tap_dance_state_t *state, void *user_data) {
 		return state;
 	}
 #else
-	
+	// RGB lighting for layer states 
+
 	layer_state_t layer_state_set_user(layer_state_t state) {
 		
 		switch (get_highest_layer(state)) {
@@ -412,12 +413,12 @@ void ctrltap_reset(qk_tap_dance_state_t *state, void *user_data) {
 						break;
 					case _DVORAK:
 						uprintf("made case _DVORAK\n");
-						rgblight_sethsv_noeeprom(HSV_GREEN);
+						rgblight_sethsv_noeeprom(HSV_ORANGE);
 				}
 				break;
 			case _DVERTY:
 				uprintf("made case _DVERTY\n");
-				rgblight_sethsv_noeeprom(HSV_ORANGE);
+				rgblight_sethsv_noeeprom(HSV_GREEN);
 				break;
 			case _MEDIA:
 				uprintf("made case _MEDIA\n");
@@ -425,7 +426,7 @@ void ctrltap_reset(qk_tap_dance_state_t *state, void *user_data) {
 				break;
 			case _NAV:
 				uprintf("made case _NAV\n");
-				rgblight_sethsv_noeeprom(HSV_GOLD);
+				rgblight_sethsv_noeeprom(RGB_CORAL);
 				break;
 			default:
 				// Or use the write_ln shortcut over adding '\n' to the end of your string
