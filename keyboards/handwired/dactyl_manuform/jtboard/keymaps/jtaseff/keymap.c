@@ -426,7 +426,7 @@ void ctrltap_reset(qk_tap_dance_state_t *state, void *user_data) {
 				break;
 			case _NAV:
 				uprintf("made case _NAV\n");
-				rgblight_sethsv_noeeprom(RGB_CORAL);
+				rgblight_sethsv_noeeprom(HSV_ORANGE);
 				break;
 			default:
 				// Or use the write_ln shortcut over adding '\n' to the end of your string
