@@ -7,6 +7,7 @@
 
 
 #define PRODUCT         Dactyl-Manuform JT
+#undef VENDOR_ID
 #define VENDOR_ID       0xFEED
 #undef PRODUCT_ID
 #define PRODUCT_ID      0x5646
